@@ -12,7 +12,7 @@ RUN npm install --no-optional \
 && npm install -g sass \
 && npm cache clean --force
 
-RUN sass "./CSS basics/variables.scss":"./CSS basics/variables.css"
+RUN sass ./CSS/ basics/variables.scss:./CSS/ basics/variables.css
 
 HEALTHCHECK --interval=30s CMD node healthcheck.js
 
