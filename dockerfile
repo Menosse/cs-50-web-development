@@ -7,7 +7,10 @@ RUN npm i npm@latest -g
 RUN mkdir /opt/node_app && chown node:node /opt/node_app
 WORKDIR /opt/node_app
 
-RUN npm install --no-optional && npm cache clean --force
+RUN npm install --no-optional \
+&& npm install -g http-server \
+&& npm install -g sass \
+&& npm cache clean --force
 
 HEALTHCHECK --interval=30s CMD node healthcheck.js
 
