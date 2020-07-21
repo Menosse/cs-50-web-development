@@ -17,6 +17,4 @@ HEALTHCHECK --interval=30s CMD node healthcheck.js
 WORKDIR /opt/node_app/app
 COPY . .
 
-RUN ["sass ./CSS basics/variables.scss:./CSS basics/variables.css"]
-
 CMD [ "node", "./bin/www", "http-server" ]
