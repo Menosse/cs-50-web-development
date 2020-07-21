@@ -1,0 +1,24 @@
+/* specificity goes 
+    1 - Inline - stype tag added to inline html element 
+    2 - id - represented by #
+    3 - class - represented by . 
+    4 - type - html tag
+*/ 
+
+#foo{
+    color: greenyellow;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.baz{
+    color: tomato;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+h1{
+    color: blue;
+    text-align: center;
+    text-transform: capitalize;
+}
