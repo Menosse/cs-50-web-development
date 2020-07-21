@@ -17,7 +17,7 @@ HEALTHCHECK --interval=30s CMD node healthcheck.js
 WORKDIR /opt/node_app/app
 COPY . .
 
-ARG target= "./CSS basics"
+ARG target="./CSS basics"
 RUN sass ${target}/variables.scss:${target}/variables.css
 
 CMD [ "node", "./bin/www", "http-server" ]
