@@ -12,11 +12,12 @@ RUN npm install --no-optional \
 && npm install -g sass \
 && npm cache clean --force
 
-RUN sass \\./CSS basics/variables.scss:./CSS basics/variables.css
-
 HEALTHCHECK --interval=30s CMD node healthcheck.js
 
 WORKDIR /opt/node_app/app
 COPY . .
+
+ARG target= "./CSS basics"
+RUN sass ${target}/variables.scss:${target}/variables.css
 
 CMD [ "node", "./bin/www", "http-server" ]
