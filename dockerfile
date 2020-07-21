@@ -10,7 +10,8 @@ WORKDIR /opt/node_app
 RUN npm install --no-optional \
 && npm install -g http-server \
 && npm install -g sass \
-&& npm cache clean --force
+&& npm cache clean --force \
+&& sass ./CSS\ basics/variables.scss:./CSS\ basics/variables.css
 
 HEALTHCHECK --interval=30s CMD node healthcheck.js
 
