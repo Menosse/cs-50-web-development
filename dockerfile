@@ -17,4 +17,4 @@ HEALTHCHECK --interval=30s CMD node healthcheck.js
 WORKDIR /opt/node_app/app
 COPY . .
 
-CMD [ "node", "./bin/www" ]
+CMD [ "node", "./bin/www", "http-server" ]
