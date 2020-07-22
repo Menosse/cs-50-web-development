@@ -1,1 +1,1 @@
-docker build -t css_basics -f dockerfile-html-css
+docker build -t css_basics -f dockerfile-html-css .
