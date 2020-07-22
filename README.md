@@ -5,4 +5,5 @@ Use the .sh scripts to build and run the docker container for each modules.
 To build use the following commands:
 
 sh docker_build-html-css.sh
+and
 sh main-html-css.sh
