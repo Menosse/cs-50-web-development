@@ -16,5 +16,5 @@ Google search results for "Harvard", for instance > https://www.google.com/searc
 * sclient=psy-ab
 * ved=0ahUKEwjSh4f_2e3qAhXaCrkGHXESDbgQ4dUDCAs
 
-## To run this project execute the sh file >
+## To run this project on a docker environment, execute the sh file >
 ### sh main.sh
