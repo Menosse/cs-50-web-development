@@ -1,3 +1,73 @@
 body,html{
     height:100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif
+}
+.home_header{
+    background-color: ;
+    font-size: 14px;
+}
+
+.home_header a, i{
+    padding: 5px;
+    margin: 2px;
+    color: grey;
+}
+
+.sign-btn{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.logo_div{
+    background-color:;
+}
+
+.search_bar{
+    height: 115px;
+    background-color:;
+}
+
+.index_img{
+    height: 220px;
+    width: 395px;
+
+}
+
+.search_text_bar{
+    border-radius: 75px;
+    height: 50px;
+    width: 550px;
+    margin: 8px;
+}
+
+.search_btn{
+    color: grey;
+    margin: 5px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+    margin-left: 100px;
+    margin-right: 100px;
+    font-size: small;
+    
+  }
+
+.footer a{
+    color: grey;
+    padding-left: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.images_img{
+    height: 130px;
+    width: 300px;
 }

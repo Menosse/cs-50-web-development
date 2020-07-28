@@ -8,24 +8,17 @@
     </head>
     <body>
     <div class="home_header d-flex justify-content-end p-2">
-        <a href="https://www.google.com/gmail/about/#">Gmail</a>
-        <a href="./img.html">Images</a>
         <i class="fa fa-th fa-1g" aria-hidden="true"></i>
         <input class="btn btn-primary sign-btn btn-sm" type="submit" value="Sign in">
     </div>
     <div class="logo_div d-flex justify-content-center">
-        <img class="index_img p-2 mt-5" src="./img/index.jpg" alt="Google's logo">
+        <img class="images_img p-2 mt-5" src="./img/Google_Images_Logo.png" alt="Google's logo">
     </div>
     <div class="search_bar d-flex justify-content-center">
-        <form class="form-group fm1" action="https://google.com/search">
-            <i class="fa fa-search" aria-hidden="true"></i>
+        <form class="form-group fm1" action="https://google.com/search?">
             <input class="form-control search_text_bar" type="text" name="q">
-            <div class="d-flex justify-content-center">
-                <input class="btn btn-light search_btn" type="submit" value="Google Search">
-                <input class="btn btn-light  search_btn" type="submit" value="I'm Feeling Lucky">
-            </div>
+            <input type="hidden" name="tbm" value="isch">
         </form>
-    </div>
     <div class="footer">
         <div class="d-flex justify-content-start float-left w-50">
             <a href="Images">Advertizing</a>
