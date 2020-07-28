@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Search</title>
+        <link rel="stylesheet" href="./img//font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="./index.css">
+    </head>
+    <body>
+    <div class="header">
+        <div class="d-flex justify-content-start float-left w-50 p-3 mt-2">
+            <img class="adv_logo_img" src="./img/index.jpg" alt="Google's logo">
+        </div>
+        <div class="d-flex justify-content-end float-left w-50 p-3 mt-2" >
+            <i class="fa fa-th fa-1g" aria-hidden="true"></i>
+            <input class="btn btn-primary" type="submit" value="Sign in">
+        </div>
+    </div>
+    <div class="body_title container-fluid d-flex justify-content-start">
+        <p>Advanced Search</p>
+    </div>
+    <form class="form-group fd1" action="https://google.com/search">
+        <div class="body_find container-fluid mt-2 ml-4">
+            <div class="row mb-2">
+                <div class="col-md-2">
+                    <p>Find pages with...</p>
+                </div>
+                <div class="col-md-4">
+                    <p> </p>
+                </div>
+                <div class="col-md-3 text-secondary small font-weight-bold">
+                    <p>To do this in the search box.</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>all these words:</p>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Type the important words: tri-colour rat terrier</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>this exact word or phrase:</p>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Put exact words in quotes: "rat terrier"</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>any of these words:</p>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Type OR between all the words you want: miniature OR standard</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 small">
+                    <p>none of these words:</p>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Put a minus sign just before words that you don't want: -rodent, -"Jack Russell"</p>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-md-2 small">
+                    <p>numbers ranging from:</p>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm fd1 col-md-5 float-left" type="text" placeholder="">
+                    <p class="float-left text-center fd1 col-md-2 small"> to </p>
+                    <input class="form-control form-control-sm fd1 col-md-5 float-right" type="text" placeholder="">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Put two full stops between the numbers and add a unit of measurement: 10..35 kg, £300..£500, 2010..2011</p>
+                </div>
+            </div>
+        </div>
+        <div class="body_narrow container-fluid mt-2 ml-4">
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Then narrow your results by...</p>
+                </div>
+                
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-3 text-secondary small font-weight-bold">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>language:</p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                        <option value="">Any Language</option>
+                        <option value="AF">Afrikaans</option>
+                        <option value="SQ">Albanian</option>
+                        <option value="AR">Arabic</option>
+                        <option value="HY">Armenian</option>
+                        <option value="EU">Basque</option>
+                        <option value="BN">Bengali</option>
+                        <option value="BG">Bulgarian</option>
+                        <option value="CA">Catalan</option>
+                        <option value="KM">Cambodian</option>
+                        <option value="ZH">Chinese (Mandarin)</option>
+                        <option value="HR">Croatian</option>
+                        <option value="CS">Czech</option>
+                        <option value="DA">Danish</option>
+                        <option value="NL">Dutch</option>
+                        <option value="EN">English</option>
+                        <option value="ET">Estonian</option>
+                        <option value="FJ">Fiji</option>
+                        <option value="FI">Finnish</option>
+                        <option value="FR">French</option>
+                        <option value="KA">Georgian</option>
+                        <option value="DE">German</option>
+                        <option value="EL">Greek</option>
+                        <option value="GU">Gujarati</option>
+                        <option value="HE">Hebrew</option>
+                        <option value="HI">Hindi</option>
+                        <option value="HU">Hungarian</option>
+                        <option value="IS">Icelandic</option>
+                        <option value="ID">Indonesian</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Find pages in the language that you select.</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>region:</p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">\
+                        <option value="all">Search all countries</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="DR Congo">DR Congo</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="Gambia">Gambia</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Libya">Libya</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Mauritius">Mauritius</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Find pages published in a particular region.</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>last update:</p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                        <option value="">anytime</option>
+                        <option value="">past 24 hour</option>
+                        <option value="">past week</option>
+                        <option value="">past month</option>
+                        <option value="">past year</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Find pages updated within the time that you specify.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 small">
+                    <p>site or domain:</p>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Search one site (like wikipedia.org ) or limit your results to a domain like .edu, .org or .gov</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>terms appearing:</p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                        <option value="">anywhere in the page</option>
+                        <option value="">in the title of the page</option>
+                        <option value="">in the text of the page</option>
+                        <option value="">in the URL of the page</option>
+                        <option value="">in links to the page</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Search for terms in the whole page, page title or web address, or links to the page you're looking for.</p>
+                </div>
+            </div>
+            <div class="row  mb-2">
+                <div class="col-md-2 small">
+                    <p> <a href="https://support.google.com/websearch/answer/510?p=adv_safesearch&hl=en&visit_id=637315638405298962-611883860&rd=1">SafeSearch:</a></p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                        <option value="">Show most relevant results</option>
+                        <option value="">Filter explicit results</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Tell SafeSearch whether to filter sexually explicit content.</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p>file type:</p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                        <option value="">any format</option>
+                        <option value="">Adobe Acrobat PDF (.pdf)</option>
+                        <option value="">Adobe Postscript (.ps)</option>
+                        <option value="">Autodesk DWF (.dwf)</option>
+                        <option value="">Google Earth KML (.kml)</option>
+                        <option value="">Google Earth KMZ (.kmz)</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Find pages in the format that you prefer.</p>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2 small">
+                    <p><a href="https://support.google.com/websearch/answer/29508?p=ws_images_usagerights&hl=en&visit_id=637315638405298962-611883860&rd=1">usage rights:</a></p>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                        <option value="">not filtered by licence</option>
+                        <option value="">free to use or share</option>
+                        <option value="">free to use or share, even commercially</option>
+                        <option value="">free to use share or modify</option>
+                        <option value="">free to use share or modify, even commercially</option>
+
+                    </select>
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p>Find pages that you are free to use yourself.</p>
+                </div>
+            </div>
+            <div class="row mb-2" >
+                <div class="col-md-2 small">
+                    <p></p>
+                </div>
+                <div class="col-md-4 d-flex justify-content-end">
+                    <input class="btn-sm btn-primary" type="submit" value="Advanved Search">
+                </div>
+                <div class="col-md-3 text-secondary adv_desc">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="container-fluid mt-2 ml-4">
+        <div class="">
+            <p>You can also...</p>
+        </div>
+        <div class="small">
+            <a href="https://support.google.com/websearch/answer/2466433?visit_id=637315638405298962-611883860&p=adv_pages_similar&hl=en&rd=1">
+                 Find pages that are similar to a URL<br>
+            </a>
+            <a href="https://support.google.com/websearch/answer/54068?p=adv_pages_visited&hl=en&visit_id=637315638405298962-611883860&rd=1">
+            Search pages that you've visited<br>
+            </a>
+            <a href="https://support.google.com/websearch/answer/2466433?visit_id=637315638405298962-611883860&p=adv_operators&hl=en&rd=1">
+            Use operators in the search box<br>
+            </a>
+            <a href="https://www.google.com.br/preferences?hl=en-BR">
+            Customise your search settings
+            </a>
+        </div>
+    </div>
+    <div class="footer_adv">
+        <div class="d-flex justify-content-start float-left w-50">
+            <a href="Images">Advertizing</a>
+            <a href="Images">Business</a>
+            <a href="Images">About</a>
+            <a href="Images">How Search Works</a>
+        </div>
+        <div class="d-flex justify-content-end float-left w-50">
+            <a href="Images">Privacy</a>
+            <a href="Images">Terms</a>
+            <a href="Images">Settings</a>
+        </div>
+    </div>
+    </body>
+</html>
