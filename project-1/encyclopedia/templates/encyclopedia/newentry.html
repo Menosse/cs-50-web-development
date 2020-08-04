@@ -1,0 +1,21 @@
+
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    New Entry
+{% endblock %}
+
+{% block body %}
+    {% if exists %}
+    <div class="alert alert-warning col-md-8" role="alert">
+        {{ exists }} <a href="{% url 'title' title %}" class="alert-link text-uppercase">{{ title }}</a>.
+    </div>
+    {% endif %}
+    <div class="form-group col-md-8">
+        <form action="{% url 'newentry' %}" method="POST">
+            {% csrf_token%}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
