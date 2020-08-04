@@ -7,11 +7,11 @@
 
 {% block body %}
     <div class="form-group col-md-8">
-        <form action="{% url 'editentry' title% }" method="POST">
+        <form action="{% url 'editentry' entry %}" method="POST">
+            <h1>{{entry}}</h1>
             {% csrf_token%}
-            {{ title }}
-            <p>edit page</p>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-secondary" value="Save">Save {{entry}}</button>
         </form>
     </div>
 {% endblock %}

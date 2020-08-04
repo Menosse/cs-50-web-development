@@ -7,8 +7,8 @@
 
 {% block body %}
     {% autoescape off %}
-        {{ title }}
+        {{ content }}
     {% endautoescape %}
 
-    <p><a href="{%url 'editentry' title1%}">Edit Page {{title1}}</a></p>
+    <p><a href="{%url 'editentry' entry%}">Edit Page {{title}}</a></p>
 {% endblock %}

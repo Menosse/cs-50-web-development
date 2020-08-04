@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 import markdown2
 from . import util
 from django.template import RequestContext
-from .models import NewEntryForm
+from .models import NewEntryForm, EditForm
 from random import choice
 
 def index(request):
@@ -34,31 +34,59 @@ def newEntry(request):
         "form": NewEntryForm()
         })
 
-def showEntry(request, title):
-    try:
-        return render(request, "encyclopedia/title.html",{
-            "title": markdown2.markdown(util.get_entry(title)),
-            "title1": title
-        })
-    except:
-        a = 'Click here to add an arcticle for'
-        return render(request, "encyclopedia/page404.html", {
-            "title": title, "text": a
-        })
 
 def randomEntry(request):
+    rand_choice = choice(util.list_entries())
     try:
-        return render(request, "encyclopedia/title.html",{
-            "title": markdown2.markdown(util.get_entry(choice(util.list_entries()))),
-        })
+        return HttpResponseRedirect(reverse("title", kwargs={'title': rand_choice }))
     except:
         error404view(request, Exception)
 
-def editEntry(request, title):
-    return render(request,"encyclopedia/editpage.html",{
-        "title": title
-    })
+def showEntry(request, title):
+    try:
+        return render(request, "encyclopedia/title.html",{
+            "content": markdown2.markdown(util.get_entry(title)),
+            "entry": title
+        })
+    except:
+        error_message = 'Click here to add an arcticle for'
+        # return HttpResponseRedirect(reverse(error404view,kwargs={"entry": title, "text": error_message}))
+        return render(request, "encyclopedia/page404.html", {"entry": title, "text": error_message})
 
+def editEntry(request, title):
+    entryContent = util.get_entry(title)
+    if request.method == "POST":
+        form = EditForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data["content"]
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse("title", kwargs={'title': title }))
+        else:
+            return render(request, "encyclopedia/editpage.html",{
+                "form": form,
+                "entry": title
+            })
+    return render(request, "encyclopedia/editpage.html",{
+        "form": EditForm(initial={'content': entryContent}), "entry": title
+        })
+
+def search(request):
+    try:
+        search_param = request.GET.get('q','')
+        if util.get_entry(search_param):
+            return HttpResponseRedirect(reverse("title", kwargs={'title': search_param }))
+        else:
+            search_string = []
+            for search_found_item in util.list_entries():
+                if search_param.upper() in search_found_item.upper():
+                    search_string.append(search_found_item)
+
+            return render(request, "encyclopedia/search.html", {
+            "entries": search_string
+        })
+    except:
+        return render(request, "encyclopedia/page404.html", Exception)
+    
 
 def error404view(request, exception):
     return render(request, "encyclopedia/page404.html", {})
