@@ -33,6 +33,7 @@ body,html{
     height: 50px;
     width: 550px;
     margin: 8px;
+    padding-left: 3.375rem;
 }
 
 .search_btn{
@@ -122,4 +123,16 @@ select option{
 
 .adv_desc{
     font-size: 0.7rem;
+}
+
+.search_icon{    
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 4.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
 }
