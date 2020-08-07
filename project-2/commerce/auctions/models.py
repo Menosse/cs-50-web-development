@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django import forms
 
 class User(AbstractUser):
     pass
@@ -42,3 +43,21 @@ class WatchList(models.Model):
    watchlist_item = models.ManyToManyField(AuctionListing, blank=True, related_name="watchlist_item")
    def __str__(self):
        return f"{self.watchlist_user} {self.watchlist_item}"
+
+class AuctionListingForm(forms.Form):
+    title = forms.CharField(
+        max_length=64,
+        widget=forms.TextInput(attrs={'class': 'form-control','autofocus':'autofocus'}))
+
+    description = forms.CharField(
+        max_length=256,
+        widget=forms.Textarea(
+        attrs={'class': 'form-control', "rows": "3"}))
+
+    starting_bid = forms.FloatField(widget=forms.NumberInput(attrs={'class': 'form-control', "min" : "0"}))
+
+    auctionlisting_category = forms.ChoiceField(
+        label='Category',
+        choices=Category.objects.all().values_list("id", "description"),
+        widget=forms.Select(attrs={'class': 'form-control'})
+        )

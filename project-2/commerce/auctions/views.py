@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Category, AuctionListing
+from .models import User, Category, AuctionListing, AuctionListingForm
 
 
 def index(request):
@@ -67,22 +67,23 @@ def register(request):
 @login_required(redirect_field_name='', login_url='index')
 def create_listing(request):
     if request.method == "POST":
-        title = request.POST["title"]
-        description = request.POST["description"]
-        starting_bid = float(request.POST["starting_bid"])
-        category = Category.objects.get(pk=int(request.POST["category"]))
-        user = User.objects.get(pk=int(request.user.id))
-        # Attempt to create auction listing
-        try:
-            new_auction = AuctionListing(title=title, description=description, starting_bid=starting_bid ,auctionlisting_user=user, auctionlisting_category=category)
-            new_auction.save()
-        except IntegrityError:
-            return HttpResponseRedirect(reverse("index"))
+        form = AuctionListingForm(request.POST)
+        if form.is_valid():
+            try:
+                new_auction = AuctionListing(
+                    title=form.cleaned_data["title"],
+                    description=form.cleaned_data["description"],
+                    starting_bid=float(form.cleaned_data["starting_bid"]),
+                    auctionlisting_user=User.objects.get(pk=int(request.user.id)),
+                    auctionlisting_category=Category.objects.get(pk=int(form.cleaned_data["auctionlisting_category"])))
+                new_auction.save()
+            except IntegrityError:
+                return HttpResponseRedirect(reverse("index"))
         return render(request, "auctions/create_listing.html",{
-            "categories": Category.objects.all(),
-            "message": "New Auction created!"
+            "message": "New Auction created!",
+            "form": AuctionListingForm(),
             })
     else:
         return render(request, "auctions/create_listing.html",{
-            "categories": Category.objects.all()
+            "form": AuctionListingForm(),
         })
