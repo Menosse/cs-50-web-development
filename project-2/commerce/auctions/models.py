@@ -8,7 +8,7 @@ class Category(models.Model):
     code = models.CharField(max_length=3)
     description = models.CharField(max_length=64)
     def __str__(self):
-        return f"{self.description} {self.code}"
+        return f"{self.description}"
 
 class AuctionListing(models.Model):
     title = models.CharField(max_length=64)
@@ -18,6 +18,7 @@ class AuctionListing(models.Model):
     auctionlisting_category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, related_name="auctionlisting_category")
     def __str__(self):
         return f"{self.title} {self.description} {self.starting_bid}"
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=64)

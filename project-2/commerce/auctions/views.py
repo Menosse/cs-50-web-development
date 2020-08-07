@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User
+from .models import User, Category, AuctionListing
 
 
 def index(request):
@@ -65,5 +65,24 @@ def register(request):
 
 
 @login_required(redirect_field_name='', login_url='index')
-def listing(request):
-    pass
+def create_listing(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        description = request.POST["description"]
+        starting_bid = float(request.POST["starting_bid"])
+        category = Category.objects.get(pk=int(request.POST["category"]))
+        user = User.objects.get(pk=int(request.user.id))
+        # Attempt to create auction listing
+        try:
+            new_auction = AuctionListing(title=title, description=description, starting_bid=starting_bid ,auctionlisting_user=user, auctionlisting_category=category)
+            new_auction.save()
+        except IntegrityError:
+            return HttpResponseRedirect(reverse("index"))
+        return render(request, "auctions/create_listing.html",{
+            "categories": Category.objects.all(),
+            "message": "New Auction created!"
+            })
+    else:
+        return render(request, "auctions/create_listing.html",{
+            "categories": Category.objects.all()
+        })
