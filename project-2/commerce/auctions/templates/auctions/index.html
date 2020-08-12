@@ -2,6 +2,21 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+    <div class="container">
+        {% for item in list %}
+            <div class="row border mb-2">
+                <div class="col-sm-4 text-capitalize">
+                    <a href="{% url 'auction_listing' item.id %}">
+                        <h4>{{item.title}}</h4>
+                    </a>
+                </div>
+                <div class="col-sm">
+                    <div class="col-row text-capitalize"><a href="{% url 'auction_listing' item.id %}"><h4>{{item.title}}</h4></a></div>
+                    <div class="col-row text-capitalize text-truncate">description: {{item.description}}</div>
+                    <div class="col-row text-capitalize">current prince: {{item.current_bid}}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-    TODO
 {% endblock %}

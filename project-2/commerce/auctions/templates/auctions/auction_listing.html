@@ -1,0 +1,133 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {%if auction_winner%}
+    <div class="container text-capitalize p-2">
+        <div class="alert alert-success">
+            {{auction_winner}}
+        </div>
+    </div>
+    {%endif%}
+    <div class="container text-capitalize p-2">
+        <div class="row justify-content-between">
+            {% if listing_owner %}
+            <div class="col-sm-8">
+                <h2>{{auction_listing.title}}</h2>
+            </div>
+            <div class="col p-2 text-right">
+                <form action="{% url 'close_listing' auction_listing.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success">Close Listing!</button>
+                </form>
+            </div>
+            {%else%}
+            <div class="col">
+                <h2>{{auction_listing.title}}</h2>
+            </div>
+            {%endif%}
+        </div>
+        <div class="row">
+            <h2>Current Price: {{auction_listing.current_bid}}</h2>
+        </div>
+        <div class="row">
+            <h4>Details: </h4>
+            <ul>
+                <li>{{auction_listing.title}}</li>
+                <li>listed by: {{auction_listing.auctionlisting_user}}</li>
+                <li>dategory: {{auction_listing.auctionlisting_category}}</li>
+                <li>description: {{auction_listing.description}}</li>
+                <li>Initial Price: {{auction_listing.starting_bid}}</li>
+            </ul>
+        </div>
+    </div>
+    {% if auction_listing.bid_is_open == True %}
+    <div class="container text-capitalize p-2">
+        <form action="{% url 'place_bid' auction_listing.id %}" method="POST">
+            {% csrf_token %}
+            {{ bid_form.as_p }}
+            {%if message != None%}
+            <div class="alert alert-warning" role="alert">
+                {{message}}
+            </div>
+            {%endif%}
+            <button class="btn btn-danger">Place a Bid!</button>
+        </form>
+    </div>
+    {%else%}
+    <div class="container text-capitaliza p-2">
+        <div class="alert alert-info col-sm-3">
+            This Auction is closed!
+        </div>
+        <div>
+            <p>Winning Bid: {{auction_listing.winning_bid}}</p>
+            <p>Winner: {{auction_listing.auctionlisting_winner}}</p>
+        </div>
+    </div>
+    {%endif%}
+    
+    <div class="container text-capitalize p-2">
+        <form action="{% url 'add_comment' auction_listing.id %}" method="POST">
+            <div class="row h5">
+                Comments
+            </div>
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button class="btn btn-primary">Add a comment!</button>
+        </form>
+    </div>
+    <div class="container text-capitalize p2">
+        {%for comment in comments%}
+        <div class="row">
+            <div class="col-sm-3">
+                {{comment.title}}
+            </div>
+            <div class="col-sm-2">
+                {{comment.comment_user}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{comment}}
+            </div>
+        </div>
+        {%endfor%}
+
+    </div>
+    <div class="container text-capitalize p-2">
+        <div class="row h5">
+            Bid history:
+        </div>
+        <div class="row h6">
+            <div class="col-sm-2">
+                Bid: 
+            </div>
+            <div class="col-sm-3">
+                date:
+            </div>
+            <div class="col-sm-2">
+                User:
+            </div>
+            <div class="col-sm-2">
+                Starting Bid:
+            </div>
+        </div>
+        {%for bid in bid_history%}
+        <div class="row">
+            <div class="col-sm-2">
+                {{bid.value}}
+            </div>
+            <div class="col-sm-3">
+                {{bid.bid_date}}
+            </div>
+            <div class="col-sm-2">
+                {{bid.bid_user}}
+            </div>
+            <div class="col-sm-2">
+                {%if bid.starting == True%}
+                *
+                {%endif%}
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+{% endblock %}

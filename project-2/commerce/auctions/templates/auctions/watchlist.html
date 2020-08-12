@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{test}} Watch List</h2>
+    
+    <div class="container">
+        {% for item in watchlist %}
+            <div class="row border mb-2">
+                <div class="col-sm-4 text-capitalize">
+                    <a href="">
+                        <h4>{{item}}</h4>
+                    </a>
+                </div>
+                <div class="col-sm">
+                    <div class="col-row text-capitalize"><a href=""><h4>{{item}}</h4></a></div>
+                    <div class="col-row text-capitalize text-truncate">description: {{item}}</div>
+                    <div class="col-row text-capitalize">current prince: {{item}}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

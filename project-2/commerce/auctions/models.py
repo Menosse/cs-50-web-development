@@ -15,8 +15,13 @@ class AuctionListing(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=256)
     starting_bid = models.FloatField()
+    current_bid = models.FloatField()
+    bid_is_open = models.BooleanField()
     auctionlisting_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="auctionlisting_user")
     auctionlisting_category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, related_name="auctionlisting_category")
+    winning_bid = models.FloatField(blank=True, null=True)
+    auctionlisting_winner = models.ForeignKey(User, null=True, on_delete=models.CASCADE, blank=True, related_name="auctionlisting_winning_user")
+    
     def __str__(self):
         return f"{self.title} {self.description} {self.starting_bid}"
 
@@ -32,7 +37,7 @@ class Comment(models.Model):
 class Bid(models.Model):
     value = models.FloatField()
     starting = models.BooleanField(max_length=64)
-    bid_date = models.DateTimeField(max_length=64,)
+    bid_date = models.DateTimeField(max_length=64)
     bid_auctionlisting = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, blank=False,  related_name="bid_auctionlisting")
     bid_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="bid_user")
     def __str__(self):
@@ -43,21 +48,3 @@ class WatchList(models.Model):
    watchlist_item = models.ManyToManyField(AuctionListing, blank=True, related_name="watchlist_item")
    def __str__(self):
        return f"{self.watchlist_user} {self.watchlist_item}"
-
-class AuctionListingForm(forms.Form):
-    title = forms.CharField(
-        max_length=64,
-        widget=forms.TextInput(attrs={'class': 'form-control','autofocus':'autofocus'}))
-
-    description = forms.CharField(
-        max_length=256,
-        widget=forms.Textarea(
-        attrs={'class': 'form-control', "rows": "3"}))
-
-    starting_bid = forms.FloatField(widget=forms.NumberInput(attrs={'class': 'form-control', "min" : "0"}))
-
-    auctionlisting_category = forms.ChoiceField(
-        label='Category',
-        choices=Category.objects.all().values_list("id", "description"),
-        widget=forms.Select(attrs={'class': 'form-control'})
-        )
