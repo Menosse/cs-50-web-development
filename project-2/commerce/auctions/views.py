@@ -25,7 +25,6 @@ def login_view(request):
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
-
         # Check if authentication successful
         if user is not None:
             login(request, user)
@@ -55,11 +54,14 @@ def register(request):
             return render(request, "auctions/register.html", {
                 "message": "Passwords must match."
             })
-
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+            new_watchlist = SingleWatchList(
+            watchlist_user=user
+            )
+            new_watchlist.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
                 "message": "Username already taken."
