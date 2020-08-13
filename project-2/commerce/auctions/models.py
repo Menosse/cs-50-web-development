@@ -8,8 +8,6 @@ class User(AbstractUser):
 class Category(models.Model):
     code = models.CharField(max_length=3)
     description = models.CharField(max_length=64)
-    def __str__(self):
-        return f"{self.description}"
 
 class AuctionListing(models.Model):
     title = models.CharField(max_length=64)
@@ -22,10 +20,6 @@ class AuctionListing(models.Model):
     auctionlisting_category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, related_name="auctionlisting_category")
     winning_bid = models.FloatField(blank=True, null=True)
     auctionlisting_winner = models.ForeignKey(User, null=True, on_delete=models.CASCADE, blank=True, related_name="auctionlisting_winning_user")
-    
-    def __str__(self):
-        return f"{self.title} {self.description} {self.starting_bid}"
-
 
 class Comment(models.Model):
     title = models.CharField(max_length=64)
@@ -33,8 +27,6 @@ class Comment(models.Model):
     comment_date = models.DateTimeField(blank=True)
     comment_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="comment_user")
     comment_auctionlisting = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, blank=False,  related_name="comment_auctionlisting")
-    def __str__(self):
-        return f"{self.title} {self.comment_content}"
 
 class Bid(models.Model):
     value = models.FloatField()
@@ -42,11 +34,7 @@ class Bid(models.Model):
     bid_date = models.DateTimeField(max_length=64)
     bid_auctionlisting = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, blank=False,  related_name="bid_auctionlisting")
     bid_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="bid_user")
-    def __str__(self):
-        return f"{self.value} {self.starting} {self.bid_date}"
 
 class SingleWatchList(models.Model):
     watchlist_user = models.OneToOneField(User, on_delete=models.CASCADE, blank=False, related_name="watchlist_user")
     watchlist_item = models.ManyToManyField(AuctionListing,null=True, blank=True, related_name="watchlist_item")
-    def __str__(self):
-        return f"{self.watchlist_user} {self.watchlist_item}"
