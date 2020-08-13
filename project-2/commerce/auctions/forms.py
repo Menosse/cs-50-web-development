@@ -19,6 +19,8 @@ class AuctionListingForm(forms.Form):
         choices=Category.objects.all().values_list("id", "description"),
         widget=forms.Select(attrs={'class': 'form-control'})
         )
+    
+    listing_pic = forms.FileField(label="Item Picture")
 
 class PlaceBid(forms.Form):
     place_bid = forms.FloatField(

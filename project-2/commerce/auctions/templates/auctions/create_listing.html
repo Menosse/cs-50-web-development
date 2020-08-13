@@ -7,7 +7,7 @@
     {%endif%}
     
     <div class="col-sm-8">
-        <form action="{% url 'create_listing' %}" method="POST">
+        <form action="{% url 'create_listing' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Submit</button>

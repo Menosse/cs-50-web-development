@@ -1,15 +1,22 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
     <div class="container">
         {% for item in list %}
             <div class="row border mb-2">
+                {% if item.listing_pic %}
                 <div class="col-sm-4 text-capitalize">
                     <a href="{% url 'auction_listing' item.id %}">
-                        <h4>{{item.title}}</h4>
+                        <img src="{{item.listing_pic.url}}" alt="{{item.title}}" class="img-thumbnail">
                     </a>
                 </div>
+                {%else%}
+                <div class="col-sm-4 text-capitalize h4">
+                    <a href="{% url 'auction_listing' item.id %}">
+                        {{item.title}}
+                    </a>
+                </div>
+                {%endif%}
                 <div class="col-sm">
                     <div class="col-row text-capitalize"><a href="{% url 'auction_listing' item.id %}"><h4>{{item.title}}</h4></a></div>
                     <div class="col-row text-capitalize text-truncate">description: {{item.description}}</div>

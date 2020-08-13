@@ -1,8 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>{{user.username}} - Watch List</h2>
-    
+    <div class="container text-capitalize h2">
+        Category - {{category.description}}
+    </div>
     <div class="container">
         <div class="row border mb-2 h4">
             <div class="col-sm-3 text-capitalize h5">
@@ -12,9 +13,9 @@
                 description
             </div>
         </div>
-        {% for item in watchlist_items %}
+        {% for item in category_items %}
             <div class="row border mb-2">
-                <div class="col-sm-3 text-capitalize h4">
+                <div class="col-sm-3 text-capitalize h5">
                     <a href="{% url 'auction_listing' item.id %}">
                         {{item.title}}
                     </a>
@@ -25,6 +26,4 @@
             </div>
         {% endfor %}
     </div>
-
-
 {% endblock %}

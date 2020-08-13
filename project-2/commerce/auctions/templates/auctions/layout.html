@@ -8,21 +8,14 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Auctions</h1>
-        <div>
-            {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
-                Not signed in.
-            {% endif %}
-        </div>
+        <div class="menu">
         <ul class="navbar-light bg-light nav">
             <li class="nav-item active">
                 <a class="nav-link navbar-brand" href="{% url 'index' %}">Active Listings</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link navbar-brand" href="{% url 'create_listing' %}">Categories</a>
+                    <a class="nav-link navbar-brand" href="{% url 'category' %}">Categories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link navbar-brand" href="{% url 'watchlist' %}">Watchlist</a>
@@ -41,7 +34,16 @@
                     <a class="nav-link navbar-brand" href="{% url 'register' %}">Register</a>
                 </li>
             {% endif %}
+            <li class="text-right">
+                <a href="{% url 'index' %}"><img src="../../static/auctions/images/logo.jpg" alt="my logo here" class="img-fluid small" style="height: 40px;"></a>
+                {% if user.is_authenticated %}
+                    Signed in as <strong>{{ user.username }}</strong>.
+                {% else %}
+                    Not signed in.
+                {% endif %}
+            </li>
         </ul>
+        </div>
         <hr>
         {% block body %}
         {% endblock %}

@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Category, AuctionListing, Bid, Comment, WatchList
+from .models import User, Category, AuctionListing, Bid, Comment, SingleWatchList
 from .forms import AuctionListingForm, PlaceBid, AddComment
 
 from datetime import datetime
@@ -73,7 +73,7 @@ def register(request):
 @login_required(redirect_field_name='', login_url='index')
 def create_listing(request):
     if request.method == "POST":
-        form = AuctionListingForm(request.POST)
+        form = AuctionListingForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 new_auction = AuctionListing(
@@ -82,6 +82,7 @@ def create_listing(request):
                     starting_bid=float(form.cleaned_data["starting_bid"]),
                     current_bid=float(form.cleaned_data["starting_bid"]),
                     bid_is_open = True,
+                    listing_pic=form.cleaned_data["listing_pic"],
                     auctionlisting_user=User.objects.get(pk=int(request.user.id)),
                     auctionlisting_category=Category.objects.get(pk=int(form.cleaned_data["auctionlisting_category"])))
                 new_auction.save()
@@ -105,26 +106,44 @@ def create_listing(request):
         })
 
 def auctionListing(request, auction_id):
-    auction_listing = AuctionListing.objects.get(pk=auction_id)
-    bid_history = Bid.objects.filter(bid_auctionlisting=auction_id).all()
-    comments = Comment.objects.filter(comment_auctionlisting=auction_id).all()
-    if request.user == auction_listing.auctionlisting_winner and auction_listing.bid_is_open == False:
-        auction_winner = "Contratulations! You won the auction!"
+    if not request.user.is_authenticated:
+        auction_listing = AuctionListing.objects.get(pk=auction_id)
+        comments = Comment.objects.filter(comment_auctionlisting=auction_id).all()
+        bid_history = Bid.objects.filter(bid_auctionlisting=auction_id).all()
+        return render(request, "auctions/auction_listing.html",{
+            "auction_listing": auction_listing,
+            "bid_history": bid_history,
+            "comments": comments
+            })
     else:
-        auction_winner = None
-    if request.user == auction_listing.auctionlisting_user and auction_listing.bid_is_open == True:
-        listing_owner= auction_listing.auctionlisting_user
-    else:
-        listing_owner= None
-    return render(request, "auctions/auction_listing.html",{
-        "auction_listing": auction_listing,
-        "bid_form": PlaceBid(),
-        "bid_history": bid_history,
-        "listing_owner": listing_owner,
-        "auction_winner": auction_winner,
-        "comment_form": AddComment,
-        "comments": comments
-        })
+        auction_listing = AuctionListing.objects.get(pk=auction_id)
+        watchlist = SingleWatchList.objects.filter(watchlist_user=int(request.user.id)).first()
+        watchlist_items = [item['id'] for item in watchlist.watchlist_item.values()]
+        logged_user = request.user
+        if auction_id in watchlist_items:
+            watchlist_add = True
+        else:
+            watchlist_add = False
+        if request.user == auction_listing.auctionlisting_winner and auction_listing.bid_is_open == False:
+            auction_winner = "Contratulations! You won the auction!"
+        else:
+            auction_winner = None
+        if request.user == auction_listing.auctionlisting_user and auction_listing.bid_is_open == True:
+            listing_owner= auction_listing.auctionlisting_user
+        else:
+            listing_owner= None
+        return render(request, "auctions/auction_listing.html",{
+            "auction_listing": auction_listing,
+            "bid_form": PlaceBid(),
+            "bid_history": Bid.objects.filter(bid_auctionlisting=auction_id).all(),
+            "listing_owner": listing_owner,
+            "auction_winner": auction_winner,
+            "comment_form": AddComment,
+            "watchlist_add": watchlist_add,
+            "watchlist_items": watchlist_items,
+            "comments": Comment.objects.filter(comment_auctionlisting=auction_id).all(),
+            "logged_user": logged_user,
+            })
 
 @login_required(redirect_field_name='', login_url='index')
 def placeBid(request, auction_id):
@@ -133,6 +152,13 @@ def placeBid(request, auction_id):
         bid_history = Bid.objects.filter(bid_auctionlisting=auction_id).all()
         comments = Comment.objects.filter(comment_auctionlisting=auction_id).all()
         user_bid = float(request.POST["place_bid"])
+        watchlist = SingleWatchList.objects.filter(watchlist_user=int(request.user.id)).first()
+        watchlist_items = [item("id") for item in watchlist.watchlist_item.values()]
+        logged_user = request.user
+        if auction_id in watchlist_items:
+            watchlist_add = True
+        else:
+            watchlist_add = False
         if request.user  == auction_listing.auctionlisting_winner and auction_listing.bid_is_open == False:
             auction_winner = "Contratulations! You won the auction!"
         else:
@@ -161,7 +187,10 @@ def placeBid(request, auction_id):
             "auction_winner": auction_winner,
             "comment_form": AddComment,
             "comments": comments,
-            "message": "The bid must be greater than the current price." 
+            "watchlist_add": watchlist_add,
+            "watchlist_items": watchlist_items,
+            "logged_user": logged_user,
+            "message": "The bid must be greater than the current price."
             })
     return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
 
@@ -189,6 +218,7 @@ def addComment(request, auction_id):
             new_comment = Comment(
                 title=request.POST["Comment_title"],
                 comment_content=request.POST["Comment_content"],
+                comment_date=datetime.now(),
                 comment_user=User.objects.get(pk=int(request.user.id)),
                 comment_auctionlisting=AuctionListing.objects.get(pk=auction_id)
             )
@@ -197,9 +227,42 @@ def addComment(request, auction_id):
 
 @login_required(redirect_field_name='', login_url='index')
 def watchlist(request):
-    user_watchlist = WatchList.objects.get(watchlist_user=int(request.user.id))
-    test = [item for item in user_watchlist.objects.all()]
+    watchlist_items = SingleWatchList.objects.filter(watchlist_user=int(request.user.id)).first()
     return render(request, "auctions/watchlist.html",{
-        "watchlist": [1,2,3],
-        "test": test
+        "watchlist_items": [item for item in watchlist_items.watchlist_item.values()],
+    })
+
+@login_required(redirect_field_name='', login_url='index')
+def addWatchlist(request, auction_id):
+    if request.method == "POST":
+        auction_listing = AuctionListing.objects.get(pk=auction_id)
+        if auction_listing.bid_is_open == False:
+            return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
+        else:
+            watchlist=SingleWatchList.objects.filter(watchlist_user=request.user.id).first()
+            watchlist.watchlist_item.add(auction_listing)
+    return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
+
+@login_required(redirect_field_name='', login_url='index')
+def removeWatchlist(request, auction_id):
+    if request.method == "POST":
+        auction_listing = AuctionListing.objects.get(pk=auction_id)
+        if auction_listing.bid_is_open == False:
+            return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
+        else:
+            watchlist=SingleWatchList.objects.filter(watchlist_user=request.user.id).first()
+            watchlist.watchlist_item.remove(auction_listing)
+    return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
+
+def listCategories(request):
+    return render(request, "auctions/category.html",{
+        "category": [item for item in Category.objects.all()],
+    })
+
+def listCategoriesItems(request, category_id):
+    category = Category.objects.get(pk=category_id)
+    auctionListing = AuctionListing.objects.filter(auctionlisting_category=category)
+    return render(request, "auctions/category_items.html",{
+        "category_items": [item for item in auctionListing],
+        "category": category,
     })

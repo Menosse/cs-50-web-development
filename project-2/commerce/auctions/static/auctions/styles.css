@@ -1,3 +1,11 @@
 body {
     padding: 10px;
 }
+.menu > ul > li {
+    display:table-cell;
+    white-space:nowrap;
+}
+.menu > ul > li:last-child,
+.menu > ul > li:last-child input {
+    width:100%;
+}

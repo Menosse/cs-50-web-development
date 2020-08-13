@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    {%if auction_winner%}
+    {%if auction_winner %}
     <div class="container text-capitalize p-2">
         <div class="alert alert-success">
             {{auction_winner}}
@@ -10,25 +10,52 @@
     {%endif%}
     <div class="container text-capitalize p-2">
         <div class="row justify-content-between">
-            {% if listing_owner %}
+            {%if logged_user %}
+            {% if watchlist_add == False %}
             <div class="col-sm-8">
                 <h2>{{auction_listing.title}}</h2>
             </div>
             <div class="col p-2 text-right">
-                <form action="{% url 'close_listing' auction_listing.id %}" method="POST">
+                <form action="{% url 'add_watchlist' auction_listing.id %}" method="POST">
                     {% csrf_token %}
-                    <button class="btn btn-outline-success">Close Listing!</button>
+                    <button class="btn btn-outline-success">Add to watchlist!</button>
                 </form>
             </div>
             {%else%}
-            <div class="col">
+            <div class="col-sm-8">
+                <h2>{{auction_listing.title}}</h2>
+            </div>
+            <div class="col p-2 text-right">
+                <form action="{% url 'remove_watchlist' auction_listing.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-danger">Remove from watchlist!</button>
+                </form>
+            </div>
+            {%endif%}
+            {%else%}
+            <div class="col-sm-8">
                 <h2>{{auction_listing.title}}</h2>
             </div>
             {%endif%}
         </div>
         <div class="row">
-            <h2>Current Price: {{auction_listing.current_bid}}</h2>
+            <div class="col h2">
+                Current Price: {{auction_listing.current_bid}}
+            </div>
+            {% if listing_owner %}
+            <div class="col p-2 text-right">
+                <form action="{% url 'close_listing' auction_listing.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success">Close Auction!</button>
+                </form>
+            </div>
+            {%endif%}
         </div>
+        {% if auction_listing.listing_pic%}
+        <div class="row">
+            <img src="{{auction_listing.listing_pic.url}}" alt="{{auction_listing.listing_pic}}" class="img-fluid">
+        </div>
+        {%endif%}
         <div class="row">
             <h4>Details: </h4>
             <ul>
@@ -41,6 +68,7 @@
         </div>
     </div>
     {% if auction_listing.bid_is_open == True %}
+    {%if logged_user %}
     <div class="container text-capitalize p-2">
         <form action="{% url 'place_bid' auction_listing.id %}" method="POST">
             {% csrf_token %}
@@ -50,9 +78,10 @@
                 {{message}}
             </div>
             {%endif%}
-            <button class="btn btn-danger">Place a Bid!</button>
+            <button class="btn btn-danger mb-3">Place a Bid!</button>
         </form>
     </div>
+    {%endif%}
     {%else%}
     <div class="container text-capitaliza p-2">
         <div class="alert alert-info col-sm-3">
@@ -64,30 +93,34 @@
         </div>
     </div>
     {%endif%}
-    
     <div class="container text-capitalize p-2">
+        <div class="row h5">
+            Comments
+        </div>
+        {%if logged_user %}
         <form action="{% url 'add_comment' auction_listing.id %}" method="POST">
-            <div class="row h5">
-                Comments
-            </div>
             {% csrf_token %}
             {{ comment_form.as_p }}
             <button class="btn btn-primary">Add a comment!</button>
         </form>
+        {%endif%}
     </div>
-    <div class="container text-capitalize p2">
+    <div class="container text-capitalize">
         {%for comment in comments%}
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 h4">
                 {{comment.title}}
             </div>
             <div class="col-sm-2">
                 {{comment.comment_user}}
             </div>
+            <div class="col-sm-3">
+                {{comment.comment_date}}
+            </div>
         </div>
-        <div class="row">
+        <div class="row mb-4">
             <div class="col">
-                {{comment}}
+                {{comment.comment_content}}
             </div>
         </div>
         {%endfor%}
