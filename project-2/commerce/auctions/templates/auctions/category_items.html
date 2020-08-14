@@ -17,11 +17,18 @@
             <div class="row border mb-2">
                 <div class="col-sm-3 text-capitalize h5">
                     <a href="{% url 'auction_listing' item.id %}">
-                        {{item.title}}
+                        <img src="{{item.listing_pic.url}}" alt="{{item.title}}" class="img-thumbnail index-img">
                     </a>
                 </div>
                 <div class="col-sm-8 text-capitalize">
+                    <p>
+                    <a href="{% url 'auction_listing' item.id %}">
+                        {{item.title}}
+                    </a>
+                    </p>
+                    <p>
                         {{item.description}}
+                    </p>
                 </div>
             </div>
         {% endfor %}

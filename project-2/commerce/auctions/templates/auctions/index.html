@@ -7,7 +7,7 @@
                 {% if item.listing_pic %}
                 <div class="col-sm-4 text-capitalize">
                     <a href="{% url 'auction_listing' item.id %}">
-                        <img src="{{item.listing_pic.url}}" alt="{{item.title}}" class="img-thumbnail">
+                        <img src="{{item.listing_pic.url}}" alt="{{item.title}}" class="img-thumbnail index-img">
                     </a>
                 </div>
                 {%else%}
@@ -20,7 +20,7 @@
                 <div class="col-sm">
                     <div class="col-row text-capitalize"><a href="{% url 'auction_listing' item.id %}"><h4>{{item.title}}</h4></a></div>
                     <div class="col-row text-capitalize text-truncate">description: {{item.description}}</div>
-                    <div class="col-row text-capitalize">current prince: {{item.current_bid}}</div>
+                    <div class="col-row text-capitalize">current prince: <span>$</span> {{item.current_bid}}</div>
                 </div>
             </div>
         {% endfor %}

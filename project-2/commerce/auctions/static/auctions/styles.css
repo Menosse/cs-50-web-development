@@ -1,3 +1,11 @@
 body {
     padding: 10px;
 }
+
+.index-img{
+    max-width: 200px;
+}
+
+.listing-img{
+    max-width: 500px;
+}

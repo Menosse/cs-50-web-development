@@ -134,18 +134,18 @@ def auctionListing(request, auction_id):
             listing_owner= auction_listing.auctionlisting_user
         else:
             listing_owner= None
-        return render(request, "auctions/auction_listing.html",{
-            "auction_listing": auction_listing,
-            "bid_form": PlaceBid(),
-            "bid_history": Bid.objects.filter(bid_auctionlisting=auction_id).all(),
-            "listing_owner": listing_owner,
-            "auction_winner": auction_winner,
-            "comment_form": AddComment,
-            "watchlist_add": watchlist_add,
-            "watchlist_items": watchlist_items,
-            "comments": Comment.objects.filter(comment_auctionlisting=auction_id).all(),
-            "logged_user": logged_user,
-            })
+    return render(request, "auctions/auction_listing.html",{
+        "auction_listing": auction_listing,
+        "bid_form": PlaceBid(),
+        "bid_history": Bid.objects.filter(bid_auctionlisting=auction_id).all(),
+        "listing_owner": listing_owner,
+        "auction_winner": auction_winner,
+        "comment_form": AddComment,
+        "watchlist_add": watchlist_add,
+        "watchlist_items": watchlist_items,
+        "comments": Comment.objects.filter(comment_auctionlisting=auction_id).all(),
+        "logged_user": logged_user,
+        })
 
 @login_required(redirect_field_name='', login_url='index')
 def placeBid(request, auction_id):
@@ -155,7 +155,7 @@ def placeBid(request, auction_id):
         comments = Comment.objects.filter(comment_auctionlisting=auction_id).all()
         user_bid = float(request.POST["place_bid"])
         watchlist = SingleWatchList.objects.filter(watchlist_user=int(request.user.id)).first()
-        watchlist_items = [item("id") for item in watchlist.watchlist_item.values()]
+        watchlist_items = [item for item in watchlist.watchlist_item.values()]
         logged_user = request.user
         if auction_id in watchlist_items:
             watchlist_add = True
@@ -170,16 +170,31 @@ def placeBid(request, auction_id):
         else:
             listing_owner= None
         if auction_listing.current_bid <= user_bid:
-            auction_listing.current_bid = user_bid
-            auction_listing.save()
-            new_bid = Bid(
-                value= user_bid,
-                starting=False,
-                bid_date=datetime.now(),
-                bid_auctionlisting = auction_listing,
-                bid_user=User.objects.get(pk=int(request.user.id))
-            )
-            new_bid.save()
+            try:
+                auction_listing.current_bid = user_bid
+                auction_listing.save()
+                new_bid = Bid(
+                    value= user_bid,
+                    starting=False,
+                    bid_date=datetime.now(),
+                    bid_auctionlisting = auction_listing,
+                    bid_user=User.objects.get(pk=int(request.user.id))
+                )
+                new_bid.save()
+            except IntegrityError:
+                return render(request, "auctions/auction_listing.html",{
+                    "auction_listing": auction_listing,
+                    "bid_form": PlaceBid(),
+                    "bid_history": bid_history,
+                    "listing_owner": listing_owner,
+                    "auction_winner": auction_winner,
+                    "comment_form": AddComment,
+                    "comments": comments,
+                    "watchlist_add": watchlist_add,
+                    "watchlist_items": watchlist_items,
+                    "logged_user": logged_user,
+                    "message": "Something wrong!"
+                })
         else:
             return render(request, "auctions/auction_listing.html",{
             "auction_listing": auction_listing,
@@ -204,10 +219,13 @@ def closeListing(request, auction_id):
         if auction_listing.bid_is_open == False:
             return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
         else:
-            auction_listing.bid_is_open = False
-            auction_listing.winning_bid = last_bid.value
-            auction_listing.auctionlisting_winner = last_bid.bid_user
-            auction_listing.save()
+            try:
+                auction_listing.bid_is_open = False
+                auction_listing.winning_bid = last_bid.value
+                auction_listing.auctionlisting_winner = last_bid.bid_user
+                auction_listing.save()
+            except IntegrityError:
+                return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
     return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
 
 @login_required(redirect_field_name='', login_url='index')
@@ -217,14 +235,17 @@ def addComment(request, auction_id):
         if auction_listing.bid_is_open == False:
             return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
         else:
-            new_comment = Comment(
+            try:
+                new_comment = Comment(
                 title=request.POST["Comment_title"],
                 comment_content=request.POST["Comment_content"],
                 comment_date=datetime.now(),
                 comment_user=User.objects.get(pk=int(request.user.id)),
                 comment_auctionlisting=AuctionListing.objects.get(pk=auction_id)
-            )
-            new_comment.save()
+                  )
+                new_comment.save()    
+            except IntegrityError:
+                return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))                        
     return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
 
 @login_required(redirect_field_name='', login_url='index')
@@ -241,8 +262,11 @@ def addWatchlist(request, auction_id):
         if auction_listing.bid_is_open == False:
             return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
         else:
-            watchlist=SingleWatchList.objects.filter(watchlist_user=request.user.id).first()
-            watchlist.watchlist_item.add(auction_listing)
+            try:
+                watchlist=SingleWatchList.objects.filter(watchlist_user=request.user.id).first()
+                watchlist.watchlist_item.add(auction_listing)
+            except expression as identifier:
+                return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))            
     return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
 
 @login_required(redirect_field_name='', login_url='index')
@@ -252,8 +276,11 @@ def removeWatchlist(request, auction_id):
         if auction_listing.bid_is_open == False:
             return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
         else:
-            watchlist=SingleWatchList.objects.filter(watchlist_user=request.user.id).first()
-            watchlist.watchlist_item.remove(auction_listing)
+            try:
+                watchlist=SingleWatchList.objects.filter(watchlist_user=request.user.id).first()
+                watchlist.watchlist_item.remove(auction_listing)
+            except expression as identifier:
+                return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))            
     return HttpResponseRedirect(reverse("auction_listing", args=(auction_listing.id,)))
 
 def listCategories(request):

@@ -40,7 +40,7 @@
         </div>
         <div class="row">
             <div class="col h2">
-                Current Price: {{auction_listing.current_bid}}
+                Current Price: <span>$</span>{{auction_listing.current_bid}}
             </div>
             {% if listing_owner %}
             <div class="col p-2 text-right">
@@ -53,7 +53,7 @@
         </div>
         {% if auction_listing.listing_pic%}
         <div class="row">
-            <img src="{{auction_listing.listing_pic.url}}" alt="{{auction_listing.listing_pic}}" class="img-fluid">
+            <img src="{{auction_listing.listing_pic.url}}" alt="{{auction_listing.listing_pic}}" class="img-fluid listing-img">
         </div>
         {%endif%}
         <div class="row">
@@ -63,7 +63,7 @@
                 <li>listed by: {{auction_listing.auctionlisting_user}}</li>
                 <li>dategory: {{auction_listing.auctionlisting_category}}</li>
                 <li>description: {{auction_listing.description}}</li>
-                <li>Initial Price: {{auction_listing.starting_bid}}</li>
+                <li>Initial Price: <span>$</span>{{auction_listing.starting_bid}}</li>
             </ul>
         </div>
     </div>
@@ -88,7 +88,7 @@
             This Auction is closed!
         </div>
         <div>
-            <p>Winning Bid: {{auction_listing.winning_bid}}</p>
+            <p>Winning Bid: <span>$</span>{{auction_listing.winning_bid}}</p>
             <p>Winner: {{auction_listing.auctionlisting_winner}}</p>
         </div>
     </div>
@@ -124,7 +124,6 @@
             </div>
         </div>
         {%endfor%}
-
     </div>
     <div class="container text-capitalize p-2">
         <div class="row h5">
@@ -147,7 +146,7 @@
         {%for bid in bid_history%}
         <div class="row">
             <div class="col-sm-2">
-                {{bid.value}}
+                <span>$</span>{{bid.value}}
             </div>
             <div class="col-sm-3">
                 {{bid.bid_date}}

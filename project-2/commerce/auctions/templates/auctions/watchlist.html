@@ -5,7 +5,7 @@
     
     <div class="container">
         <div class="row border mb-2 h4">
-            <div class="col-sm-3 text-capitalize h5">
+            <div class="col-sm-4 text-capitalize h5">
                 Listing
             </div>
             <div class="col-sm-8 text-capitalize h5">
@@ -14,7 +14,7 @@
         </div>
         {% for item in watchlist_items %}
             <div class="row border mb-2">
-                <div class="col-sm-3 text-capitalize h4">
+                <div class="col-sm-4 text-capitalize h4">
                     <a href="{% url 'auction_listing' item.id %}">
                         {{item.title}}
                     </a>
