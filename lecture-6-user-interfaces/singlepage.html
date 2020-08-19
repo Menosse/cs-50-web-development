@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Page</title>
+    <style>
+        div{
+            display: none;
+        }
+    </style>
+    <script>
+        function showPage(page){
+            document.querySelectorAll('div').forEach(div =>{
+                div.style.display='none';
+            })
+            document.querySelector(`#${page}`).style.display = 'block';
+        }
+        document.addEventListener('DOMContentLoaded', () =>{
+            document.querySelectorAll('button').forEach(button =>{
+                button.onclick = function(){
+                    showPage(this.dataset.page);
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+    <button data-page="page1">page1</button>
+    <button data-page="page2">page2</button>
+    <button data-page="page3">page3</button>
+    <div id="page1">
+        <h1>Page 1</h1>
+    </div>
+    <div id="page2">
+        <h2>Page 2</h2>
+    </div>
+    <div id="page3">
+        <h3>Page 3</h3>
+    </div>
+</body>
+</html>

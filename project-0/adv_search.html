@@ -19,7 +19,7 @@
     <div class="body_title container-fluid d-flex justify-content-start">
         <p>Advanced Search</p>
     </div>
-    <form class="form-group fd1" action="https://google.com/search">
+    <form class="form-group fd1" action="https://www.google.com/search">
         <div class="body_find container-fluid mt-2 ml-4">
             <div class="row mb-2">
                 <div class="col-md-2">
@@ -37,7 +37,7 @@
                     <p>all these words:</p>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="" name="as_q">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p>Type the important words: tri-colour rat terrier</p>
@@ -48,7 +48,7 @@
                     <p>this exact word or phrase:</p>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="" name="as_epq">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p>Put exact words in quotes: "rat terrier"</p>
@@ -59,7 +59,7 @@
                     <p>any of these words:</p>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="" name="as_oq">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p>Type OR between all the words you want: miniature OR standard</p>
@@ -70,7 +70,7 @@
                     <p>none of these words:</p>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="" name="as_eq">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p>Put a minus sign just before words that you don't want: -rodent, -"Jack Russell"</p>
@@ -81,9 +81,9 @@
                     <p>numbers ranging from:</p>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control form-control-sm fd1 col-md-5 float-left" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1 col-md-5 float-left" type="text" placeholder="" name="as_nlo">
                     <p class="float-left text-center fd1 col-md-2 small"> to </p>
-                    <input class="form-control form-control-sm fd1 col-md-5 float-right" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1 col-md-5 float-right" type="text" placeholder="" name="as_nhi">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p>Put two full stops between the numbers and add a unit of measurement: 10..35 kg, £300..£500, 2010..2011</p>
@@ -107,36 +107,36 @@
                     <p>language:</p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="lr">
                         <option value="">Any Language</option>
-                        <option value="AF">Afrikaans</option>
-                        <option value="SQ">Albanian</option>
-                        <option value="AR">Arabic</option>
-                        <option value="HY">Armenian</option>
-                        <option value="EU">Basque</option>
-                        <option value="BN">Bengali</option>
-                        <option value="BG">Bulgarian</option>
-                        <option value="CA">Catalan</option>
-                        <option value="KM">Cambodian</option>
-                        <option value="ZH">Chinese (Mandarin)</option>
-                        <option value="HR">Croatian</option>
-                        <option value="CS">Czech</option>
-                        <option value="DA">Danish</option>
-                        <option value="NL">Dutch</option>
-                        <option value="EN">English</option>
-                        <option value="ET">Estonian</option>
-                        <option value="FJ">Fiji</option>
-                        <option value="FI">Finnish</option>
-                        <option value="FR">French</option>
-                        <option value="KA">Georgian</option>
-                        <option value="DE">German</option>
-                        <option value="EL">Greek</option>
-                        <option value="GU">Gujarati</option>
-                        <option value="HE">Hebrew</option>
-                        <option value="HI">Hindi</option>
-                        <option value="HU">Hungarian</option>
-                        <option value="IS">Icelandic</option>
-                        <option value="ID">Indonesian</option>
+                        <option value="lang_AF">Afrikaans</option>
+                        <option value="lang_SQ">Albanian</option>
+                        <option value="lang_AR">Arabic</option>
+                        <option value="lang_HY">Armenian</option>
+                        <option value="lang_EU">Basque</option>
+                        <option value="lang_BN">Bengali</option>
+                        <option value="lang_BG">Bulgarian</option>
+                        <option value="lang_CA">Catalan</option>
+                        <option value="lang_KM">Cambodian</option>
+                        <option value="lang_ZH">Chinese (Mandarin)</option>
+                        <option value="lang_HR">Croatian</option>
+                        <option value="lang_CS">Czech</option>
+                        <option value="lang_DA">Danish</option>
+                        <option value="lang_NL">Dutch</option>
+                        <option value="lang_EN">English</option>
+                        <option value="lang_ET">Estonian</option>
+                        <option value="lang_FJ">Fiji</option>
+                        <option value="lang_FI">Finnish</option>
+                        <option value="lang_FR">French</option>
+                        <option value="lang_KA">Georgian</option>
+                        <option value="lang_DE">German</option>
+                        <option value="lang_EL">Greek</option>
+                        <option value="lang_GU">Gujarati</option>
+                        <option value="lang_HE">Hebrew</option>
+                        <option value="lang_HI">Hindi</option>
+                        <option value="lang_HU">Hungarian</option>
+                        <option value="lang_IS">Icelandic</option>
+                        <option value="lang_ID">Indonesian</option>
                     </select>
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
@@ -148,26 +148,26 @@
                     <p>region:</p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">\
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="cr">
                         <option value="all">Search all countries</option>
-                        <option value="Algeria">Algeria</option>
-                        <option value="Angola">Angola</option>
-                        <option value="Benin">Benin</option>
-                        <option value="Botswana">Botswana</option>
-                        <option value="Cameroon">Cameroon</option>
-                        <option value="DR Congo">DR Congo</option>
-                        <option value="Egypt">Egypt</option>
-                        <option value="Ethiopia">Ethiopia</option>
-                        <option value="Gabon">Gabon</option>
-                        <option value="Gambia">Gambia</option>
-                        <option value="Ghana">Ghana</option>
-                        <option value="Kenya">Kenya</option>
-                        <option value="Lesotho">Lesotho</option>
-                        <option value="Libya">Libya</option>
-                        <option value="Madagascar">Madagascar</option>
-                        <option value="Malawi">Malawi</option>
-                        <option value="Mali">Mali</option>
-                        <option value="Mauritius">Mauritius</option>
+                        <option value="countryAl">Algeria</option>
+                        <option value="countryAngola">Angola</option>
+                        <option value="countryBenin">Benin</option>
+                        <option value="countryBotswana">Botswana</option>
+                        <option value="countryCameroon">Cameroon</option>
+                        <option value="countryDR Congo">DR Congo</option>
+                        <option value="countryEgypt">Egypt</option>
+                        <option value="countryEthiopia">Ethiopia</option>
+                        <option value="countryGabon">Gabon</option>
+                        <option value="countryGambia">Gambia</option>
+                        <option value="countryGhana">Ghana</option>
+                        <option value="countryKenya">Kenya</option>
+                        <option value="countryLesotho">Lesotho</option>
+                        <option value="countryLibya">Libya</option>
+                        <option value="countryMadagascar">Madagascar</option>
+                        <option value="countryMalawi">Malawi</option>
+                        <option value="countryMali">Mali</option>
+                        <option value="countryMauritius">Mauritius</option>
                     </select>
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
@@ -179,12 +179,12 @@
                     <p>last update:</p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
-                        <option value="">anytime</option>
-                        <option value="">past 24 hour</option>
-                        <option value="">past week</option>
-                        <option value="">past month</option>
-                        <option value="">past year</option>
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="as_qdr">
+                        <option value="all">anytime</option>
+                        <option value="d">past 24 hour</option>
+                        <option value="w">past week</option>
+                        <option value="m">past month</option>
+                        <option value="y">past year</option>
                     </select>
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
@@ -196,7 +196,7 @@
                     <p>site or domain:</p>
                 </div>
                 <div class="col-md-4">
-                    <input class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <input class="form-control form-control-sm fd1" type="text" placeholder="" name="as_sitesearch">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p>Search one site (like wikipedia.org ) or limit your results to a domain like .edu, .org or .gov</p>
@@ -207,12 +207,12 @@
                     <p>terms appearing:</p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
-                        <option value="">anywhere in the page</option>
-                        <option value="">in the title of the page</option>
-                        <option value="">in the text of the page</option>
-                        <option value="">in the URL of the page</option>
-                        <option value="">in links to the page</option>
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="as_occt">
+                        <option value="any">anywhere in the page</option>
+                        <option value="title">in the title of the page</option>
+                        <option value="body">in the text of the page</option>
+                        <option value="url">in the URL of the page</option>
+                        <option value="links">in links to the page</option>
                     </select>
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
@@ -224,9 +224,9 @@
                     <p> <a href="https://support.google.com/websearch/answer/510?p=adv_safesearch&hl=en&visit_id=637315638405298962-611883860&rd=1">SafeSearch:</a></p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
-                        <option value="">Show most relevant results</option>
-                        <option value="">Filter explicit results</option>
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="safe">
+                        <option value="images">Show most relevant results</option>
+                        <option value="active">Filter explicit results</option>
                     </select>
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
@@ -238,13 +238,13 @@
                     <p>file type:</p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="as_filetype">
                         <option value="">any format</option>
-                        <option value="">Adobe Acrobat PDF (.pdf)</option>
-                        <option value="">Adobe Postscript (.ps)</option>
-                        <option value="">Autodesk DWF (.dwf)</option>
-                        <option value="">Google Earth KML (.kml)</option>
-                        <option value="">Google Earth KMZ (.kmz)</option>
+                        <option value="pdf">Adobe Acrobat PDF (.pdf)</option>
+                        <option value="ps">Adobe Postscript (.ps)</option>
+                        <option value="dwf">Autodesk DWF (.dwf)</option>
+                        <option value="kml">Google Earth KML (.kml)</option>
+                        <option value="kmz">Google Earth KMZ (.kmz)</option>
                     </select>
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
@@ -256,12 +256,12 @@
                     <p><a href="https://support.google.com/websearch/answer/29508?p=ws_images_usagerights&hl=en&visit_id=637315638405298962-611883860&rd=1">usage rights:</a></p>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control form-control-sm fd1" type="text" placeholder="">
+                    <select class="form-control form-control-sm fd1" type="text" placeholder="" name="tbs">
                         <option value="">not filtered by licence</option>
-                        <option value="">free to use or share</option>
-                        <option value="">free to use or share, even commercially</option>
-                        <option value="">free to use share or modify</option>
-                        <option value="">free to use share or modify, even commercially</option>
+                        <option value="sur:f">free to use or share</option>
+                        <option value="sur:fc">free to use or share, even commercially</option>
+                        <option value="sur:fm">free to use share or modify</option>
+                        <option value="sur:fmc">free to use share or modify, even commercially</option>
 
                     </select>
                 </div>
@@ -274,7 +274,7 @@
                     <p></p>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end">
-                    <input class="btn-sm btn-primary" type="submit" value="Advanved Search">
+                    <input class="btn-sm btn-primary" type="submit" value="Advanced Search">
                 </div>
                 <div class="col-md-3 text-secondary adv_desc">
                     <p></p>
