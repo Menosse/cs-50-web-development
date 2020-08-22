@@ -1,0 +1,70 @@
+#addition{
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#problem{
+    font-size: 72px;
+}
+
+#winner {
+    font-size: 72px;
+    color: green;
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+}
+#winner a {
+    color: green;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+#end {
+    text-align: center;
+    opacity: 1;
+    height: 100%;
+    width: auto;
+    padding: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: left;
+    display: none;
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+}
+
+@keyframes hide {
+    0%{
+        opacity: 1;
+        height: 100%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+    75%{
+        opacity: 0;
+        height: 100%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+    100%{
+        opacity: 0;
+        height: 0%;
+        line-height: 0%;
+        padding: 0;
+        margin-bottom: 0px;
+    }
+}
+@keyframes show {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

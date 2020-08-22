@@ -1,0 +1,47 @@
+body{
+    padding-bottom: 50px;
+}
+
+.hide{
+    float: right;
+}
+
+.post{
+    background-color: aquamarine;
+    height: 75px;
+    width: auto;
+    padding: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: left;
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-play-state: paused !important;
+}
+
+@keyframes hide {
+    0%{
+        opacity: 1;
+        height: 100%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+    75%{
+        opacity: 0;
+        height: 100%;
+        line-height: 100%;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+    100%{
+        opacity: 0;
+        height: 0%;
+        line-height: 0%;
+        padding: 0;
+        margin-bottom: 0px;
+    }
+}
+

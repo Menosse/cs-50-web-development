@@ -1,0 +1,15 @@
+* {
+    font-family: sans-serif;
+}
+
+.post{
+    background-color: aquamarine;
+    height: 75px;
+    width: auto;
+    padding: 15px;
+    margin: 15px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: left;
+    text-justify: auto;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+    <link rel="stylesheet" href="./addition-react.css">
+
+    <title>React</title>
+</head>
+<body>
+    <div id="addition"></div>
+    <script type="text/babel">
+
+    class App extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = {
+                num1: 1,
+                num2: 1,
+                response: '',
+                score: 0
+            };
+
+        }
+        render() {
+            if(this.state.score === 10){
+                return(
+                    <div>
+                        <div id="winner">
+                            <a onClick={this.hidePost} href="#" id='hide'>You Won!</a>
+                        </div>
+                        <div id='end'>
+                            <div id='end-content'>This is the end...</div>
+                            <button onClick={this.reload}>Start Over!</button>
+                        </div>
+                    </div>
+                )
+            }
+            return (
+                <div>
+                    <div id="problem">{this.state.num1} + {this.state.num2}</div>
+                    <input type="text" onKeyPress={this.inputKeyPress} onChange={this.updateResponse} value={this.state.response}></input>
+                    <div>Your score is: {this.state.score}</div>
+                    
+                </div>
+            );
+        }
+        inputKeyPress = (event) =>{
+            if( event.key === 'Enter'){
+                const answer = parseInt(this.state.response);
+                if (answer === this.state.num1 + this.state.num2){
+                    // right answer
+                    this.setState(state=>({
+                        score: state.score + 1,
+                        num1: Math.ceil(Math.random() * 10),
+                        num2: Math.ceil(Math.random() * 10),
+                        response: '',  
+                    }))
+                    console.log(this.state.score)
+                } else{
+                    //wrong answer
+                    this.setState(state=>({
+                        score: state.score - 1,
+                        response: '',
+                    }))
+                }
+            }
+        }
+
+        updateResponse = (event) =>{
+            this.setState({
+                response: event.target.value
+            });
+        }
+
+        hidePost = (event) =>{
+            const element = event.target;
+            element.parentElement.style.animationPlayState = 'running';
+            document.querySelector('#end').style.display = 'block';
+            document.querySelector('#end').style.animationPlayState = 'running';
+            element.parentElement.addEventListener('animationend', () =>{
+                element.parentElement.remove();
+            })
+        }
+        reload = (event) =>{
+            location.reload()
+        }
+    }
+
+    ReactDOM.render(<App />, document.querySelector('#addition'))
+    </script>
+</body>
+</html>
