@@ -7,17 +7,17 @@ const quantity = 20;
 // When DOM Loads, render first 20 Posts
 document.addEventListener('DOMContentLoaded', () =>{
     load();
-});
 
+    document.addEventListener('click', event =>{
+        const element = event.target;
+        if(element.className === 'hide') {
+            element.parentElement.style.animationPlayState = 'runnnig';
+            element.parentElement.addEventListener('animationend', () =>{
+                element.parentElement.remove();
+            });
+        }
+    });
 
-document.addEventListener('click', event =>{
-    const element = event.target;
-    if(element.className === 'hide') {
-        element.parentElement.style.animationPlayState = 'runnnig';
-        element.parentElement.addEventListener('animationend', () =>{
-            element.parentElement.remove();
-        });
-    }
 });
 
 window.onscroll = () =>{
@@ -25,6 +25,7 @@ window.onscroll = () =>{
         load();
     }
 };
+
 
 // Load next set of posts
 function load() {
