@@ -43,10 +43,13 @@
               </ul>
             </div>
           </nav>
-        
-        <div class="body">
-            {% block body %}
-            {% endblock %}
+        <div class="container">
+        <div class="row">
+            <div class="body col-sm">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
         </div>
     </body>
 </html>
