@@ -66,8 +66,16 @@ def register(request):
         return render(request, "network/register.html")
 
 @login_required
-def posts(request):
-    posts = Post.objects.all()
+def posts(request, postkind):
+
+    if postkind == "all":
+        posts = Post.objects.all()
+    elif postkind == "following":
+        following = Following.objects.get(following=request.user)
+        following_list = [user for user in following.following_list.all()]
+        posts = Post.objects.filter(user__in=following_list)
+    else:
+        return JsonResponse({"error": "Invalid path."}, status=400)
     posts = posts.order_by("-timestamp").all()
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
@@ -105,6 +113,39 @@ def compose_post(request):
     except IntegrityError as e:
         print(e)
         return JsonResponse({"message": f"internal error {e}."}, status=500)
+
+@csrf_exempt
+@login_required
+def single_post(request, post_id):
     
+    # FIND REQUESTED POST
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+    
+    # GET - SHOW SINGLE POST BASED ON POST ID
+    if request.method == "GET":
+        return JsonResponse(post.serialize())
 
+    # PUT - ADD LIKE TO SINGLE POST BASED ON POST ID
+    elif request.method == "PUT":
+        #data = json.loads(request.body)
+        #if data.get("num_likes") is not None:
+        
+        #increase post likes
+        post.num_likes += 1
+        post.save()
 
+        #register like
+        like = Like(
+            user = request.user,
+            post = post,
+            currently_like = True,
+        )
+        like.save()
+        return HttpResponse(status=204)
+    else:
+        return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)

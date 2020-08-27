@@ -3,7 +3,7 @@
 }
 
 body{
-    font-family: sans-serif;    
+    font-family: sans-serif;
 }
 
 #main{
@@ -14,6 +14,21 @@ body{
 .user_div{
     font-weight: bolder;
 }
+
+#post-row{
+    border: 1px #ccc solid;
+    border-bottom: hidden;
+    padding-bottom: 15px;
+}
+#post-row:last-child{
+    border: 1px #ccc solid;
+}
+
+#post-body{
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
 
 .post_div{
     height: 100%;
