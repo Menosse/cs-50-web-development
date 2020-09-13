@@ -16,4 +16,5 @@ urlpatterns = [
     path("likes", views.likes, name="likes"),
     path("compose", views.compose_post, name="compose"),
     path("single_post/<int:post_id>", views.single_post, name="single_post"),
+    path("single_post/check_like/<int:post_id>", views.check_like_post, name="like_post"),
 ]

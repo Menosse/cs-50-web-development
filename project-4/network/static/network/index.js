@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
     document.querySelector('#following').addEventListener('click', () => load_posts('following'));
     document.querySelector('#all-posts').addEventListener('click', () => load_posts('all'));
     document.querySelector('#user-page').addEventListener('click', () => load_posts('all'));
-    document.querySelector('#single-post').addEventListener('click', () => like_post('1'));
+    //document.querySelector('#single-post').addEventListener('click', () => like_post('1'));
     
     //Load all by default
     //load_posts('all')
@@ -16,6 +16,14 @@ document.addEventListener('DOMContentLoaded', function(){
     textarea.value='';
     textarea.addEventListener('keydown', autosize);
     });
+
+function check_like(post_id){
+    fetch(`/single_post/like/${post_id}`)
+    .then(response => response.json())
+    .then(result=>{
+        console.log(result)
+    })
+}
 
 function like_post(post_id){
     fetch(`/single_post/${post_id}`, {
@@ -86,13 +94,25 @@ function get_posts(postkind){
             post_div.innerHTML = `${post.body} ${post.num_likes}`;
             post_div.className = "post_div col-sm";
             
+            //Create like button
+            const like_button = document.createElement("button");
+            like_button.innerHTML = "Like!";
+            like_button.id = `${post.id}`;
+            like_button.className = "like-button btn btn-primary"
+            like_button.addEventListener('click', () =>{like_post(like_button.id)})
+            if(check_like(`${post.id}`)){
+                like_button.disabled=true;
+            }
+            post_div.append(like_button);
+
+
             //Create new Row
             const row_div = document.createElement('div');
             row_div.className = "row";
             row_div.id = "post-row";
-            row_div.appendChild(user_div)
-            row_div.appendChild(post_div)
-            
+            row_div.appendChild(user_div);
+            row_div.appendChild(post_div);
+
             //Append to the DOM
             document.querySelector('#posts-view').append(row_div);
             //document.querySelector('#posts-view').append(post_div);

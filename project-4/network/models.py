@@ -10,6 +10,7 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     num_likes = models.IntegerField(blank=True)
     post_pic = models.ImageField(null=True, blank=True)
+    liked_by_user = models.ManyToManyField(User,null=True, blank=True, related_name="liked_by_user")
 
     def serialize(self):
         return {
@@ -18,7 +19,8 @@ class Post(models.Model):
             "user": self.user.username,
             "body": self.body,
             "timestamp": self.timestamp.strftime("%b %#d %Y, %#I:%M %p"),
-            "num_likes": self.num_likes
+            "num_likes": self.liked_by_user.all().count(),
+            "liked_by_user": [user.email for user in self.liked_by_user.all()],
         }
 
 class Like(models.Model):

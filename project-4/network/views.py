@@ -135,6 +135,7 @@ def single_post(request, post_id):
         
         #increase post likes
         post.num_likes += 1
+        post.liked_by_user.add(request.user)
         post.save()
 
         #register like
@@ -149,3 +150,15 @@ def single_post(request, post_id):
         return JsonResponse({
             "error": "GET or PUT request required."
         }, status=400)
+
+def check_like_post(request, post_id):
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+    if request.user in post.liked_by_user.all():
+        return JsonResponse({"post_liked_by_user": True})
+        #return True
+    else:
+        return JsonResponse({"post_liked_by_user": False})
+        #return False
