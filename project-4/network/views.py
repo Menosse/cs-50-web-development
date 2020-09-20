@@ -133,17 +133,24 @@ def single_post(request, post_id):
         #data = json.loads(request.body)
         #if data.get("num_likes") is not None:
         
-        #increase post likes
-        post.num_likes += 1
-        post.liked_by_user.add(request.user)
-        post.save()
-
-        #register like
-        like = Like(
+        #check post likes
+        if request.user in post.liked_by_user.all():
+            post.liked_by_user.remove(request.user)
+            post.num_likes -= 1
+            like = Like(
+            user = request.user,
+            post = post,
+            currently_like = False,
+            )
+        else:
+            post.liked_by_user.add(request.user)
+            post.num_likes += 1
+            like = Like(
             user = request.user,
             post = post,
             currently_like = True,
-        )
+            )
+        post.save()
         like.save()
         return HttpResponse(status=204)
     else:
@@ -151,6 +158,8 @@ def single_post(request, post_id):
             "error": "GET or PUT request required."
         }, status=400)
 
+@csrf_exempt
+@login_required
 def check_like_post(request, post_id):
     try:
         post = Post.objects.get(pk=post_id)
@@ -162,3 +171,9 @@ def check_like_post(request, post_id):
     else:
         return JsonResponse({"post_liked_by_user": False})
         #return False
+
+@csrf_exempt
+@login_required
+def user(request):
+    user = User.objects.get(pk=request.user.id)
+    return JsonResponse(user.serialize())

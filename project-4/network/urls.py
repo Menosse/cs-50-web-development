@@ -12,6 +12,7 @@ urlpatterns = [
     #API URL
     path("posts/<str:postkind>", views.posts, name="posts"),
     path("following", views.following, name="following"),
+    path("user", views.user, name="user"),
     path("follower", views.follower, name="follower"),
     path("likes", views.likes, name="likes"),
     path("compose", views.compose_post, name="compose"),

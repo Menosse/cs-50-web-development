@@ -4,12 +4,20 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+    def serialize(self):
+        return{
+            "id": self.id,
+            "user": self.username,
+            "email": self.email,
+        }
+
 class Post(models.Model):
     user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="post_user")
     body = models.TextField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     num_likes = models.IntegerField(blank=True)
     post_pic = models.ImageField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     liked_by_user = models.ManyToManyField(User,null=True, blank=True, related_name="liked_by_user")
 
     def serialize(self):
@@ -19,8 +27,9 @@ class Post(models.Model):
             "user": self.user.username,
             "body": self.body,
             "timestamp": self.timestamp.strftime("%b %#d %Y, %#I:%M %p"),
-            "num_likes": self.liked_by_user.all().count(),
-            "liked_by_user": [user.email for user in self.liked_by_user.all()],
+            "num_likes": self.num_likes,
+            "timestamp": self.timestamp.strftime("%b %#d %Y, %#I:%M %p"),
+            "liked_by_user": [user.username for user in self.liked_by_user.all()],
         }
 
 class Like(models.Model):
