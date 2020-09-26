@@ -1,16 +1,12 @@
 
 // When DOM Loads, add event listener
 document.addEventListener('DOMContentLoaded', function(){
+    
     //add event listener
     document.querySelector('#post-form').addEventListener('submit', new_post);
     document.querySelector('#following').addEventListener('click', () => load_posts('following'));
     document.querySelector('#all-posts').addEventListener('click', () => load_posts('all'));
     document.querySelector('#user-page').addEventListener('click', () => load_posts('all'));
-    document.querySelectorAll('.like-button').forEach(button=>{
-        button.onclick = ()=>{
-            console.log('like clicked')
-        }
-    })
 
     //add textarea autogrow effect
     var textarea = document.querySelector('#post-body');
@@ -19,24 +15,20 @@ document.addEventListener('DOMContentLoaded', function(){
     
     //Load all by default
     load_posts('all');
-    //like buttons
-    //config_like_button();
-        
-    });
-
-document.onreadystatechange = function () {
-    if (document.readyState === 'complete') {
-        console.log(document.querySelectorAll('.like-button'))
-        console.log(document.readyState)
-    }
-    }
-      
     
+    //like buttons
+    setTimeout(function(){
+        config_like_button()
+    },100)
+})
+
 function get_user(){
     fetch(`/user`)
     .then(response => response.json())
     .then(result =>{return(result.user) })}
 
+
+// Like a post and update the front
 function like_post(post_id){
     fetch(`/single_post/${post_id}`, {
         method: 'PUT',
@@ -46,7 +38,17 @@ function like_post(post_id){
     })
     .catch(error => {
         console.log("Error", error);
+    }).then(()=>{
+        fetch(`/single_post/${post_id}`)
+        .then(response => response.json())
+        .then(post =>{
+        like_div = document.getElementById(post_id).parentNode.previousSibling
+        like_div.innerHTML = `${post.num_likes}`
+        })
     })
+    if(event.target.innerHTML==='Like!'){
+        event.target.innerHTML='Unlike'
+    }else{event.target.innerHTML='Like!'}
 }
 
 function load_posts(postkind){
@@ -61,6 +63,7 @@ function load_posts(postkind){
     get_posts(postkind)
 }
 
+// Autosize the POST text area
 function autosize(){
     var el = this;
     setTimeout(function(){
@@ -69,6 +72,7 @@ function autosize(){
     },0);
     }
 
+//Make a new post
 function new_post(){
     event.preventDefault();
     if(document.querySelector('#post-body').value === ''){
@@ -102,23 +106,31 @@ function get_posts(postkind){
             
             //Create post body col
             const post_div = document.createElement('div');
-            post_div.innerHTML = `${post.body} ${post.num_likes} ${post.timestamp}`;
+            post_div.innerHTML = `${post.body} ${post.timestamp}`;
             post_div.className = "post_div col-sm";
             
+            //Create likes div
+            const likes_div = document.createElement('div');
+            likes_div.innerHTML = `${post.num_likes}`
+            likes_div.className = "likes_div col-sm";
             //Create like button
+            const like_button_div = document.createElement('div');
+            like_button_div.className = "like_button_div col-sm";
             const like_button = document.createElement("button");
             like_button.id = `${post.id}`;
             like_button.className = "like-button btn btn-primary"
-            like_button.addEventListener('click', () =>{like_post(like_button.id)})
+            like_button_div.appendChild(like_button)
             fetch('/user')
             .then(response => response.json())
             .then(result =>{
                 if(post.liked_by_user.includes(result.user)){
-                    like_button.innerHTML = "Unlike!";
+                    like_button.innerHTML = "Unlike";
                 }else {like_button.innerHTML = "Like!";}
             })
-            post_div.appendChild(like_button)
-
+            
+            
+            post_div.appendChild(likes_div)
+            post_div.appendChild(like_button_div)
 
             //Create new Row
             const row_div = document.createElement('div');
@@ -138,15 +150,11 @@ function get_posts(postkind){
 }
 
 function config_like_button(){
-    const buttons = document.getElementsByClassName("like-button")
-    console.log(buttons);
-    console.log(document.querySelectorAll(".like-button"))
+    document.querySelectorAll(".like-button").forEach(button => {
+        console.log(button.id)
+        button.onclick = () =>{
+            like_post(button.id)
+        }
 
-    //fetch('/user')
-    //.then(response => response.json())
-    //.then(result =>{
-    //    if(post.liked_by_user.includes(result.user)){
-    //        like_button.innerHTML = "Unlike!";
-    //    }else {like_button.innerHTML = "Like!";}
-    //})
+    })
 }
