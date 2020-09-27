@@ -7,6 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
+import datetime
 
 from .models import User, Post, Like, Following, Follower
 
@@ -77,7 +79,13 @@ def posts(request, postkind):
     else:
         return JsonResponse({"error": "Invalid path."}, status=400)
     posts = posts.order_by("-timestamp").all()
-    return JsonResponse([post.serialize() for post in posts], safe=False)
+    #return JsonResponse([post.serialize() for post in posts], safe=False)
+    posts1 = [post.serialize() for post in posts]
+    page = Paginator(posts1, 5)
+    current_page = page.page(1)
+    context = {"posts": list(current_page)}
+    return JsonResponse(context, safe=False)
+    
 
 @login_required
 def following(request):
@@ -167,13 +175,33 @@ def check_like_post(request, post_id):
         return JsonResponse({"error": "Post not found."}, status=404)
     if request.user in post.liked_by_user.all():
         return JsonResponse({"post_liked_by_user": True})
-        #return True
     else:
         return JsonResponse({"post_liked_by_user": False})
-        #return False
 
 @csrf_exempt
 @login_required
 def user(request):
     user = User.objects.get(pk=request.user.id)
     return JsonResponse(user.serialize())
+
+@csrf_exempt
+@login_required
+def single_post_content(request, post_id):
+    try:
+        post = Post.objects.get(pk=post_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+    #if request.user != post.user:
+    #    return JsonResponse({"error": "Incorrect request."}, status=501)
+    #else:
+    if request.method == "GET":
+        return JsonResponse(post.serialize())
+    elif request.method == "PUT":
+        try:
+            data = json.loads(request.body)
+            post.body = data.get("post_body")
+            post.save()
+            return JsonResponse({"message": "Post made successfully."}, status=201)
+        except IntegrityError as e:
+            print(e)
+            return JsonResponse({"message": f"internal error {e}."}, status=500)

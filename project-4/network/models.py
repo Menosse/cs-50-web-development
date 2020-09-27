@@ -14,10 +14,9 @@ class User(AbstractUser):
 class Post(models.Model):
     user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="post_user")
     body = models.TextField(blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now=True)
     num_likes = models.IntegerField(blank=True)
     post_pic = models.ImageField(null=True, blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
     liked_by_user = models.ManyToManyField(User,null=True, blank=True, related_name="liked_by_user")
 
     def serialize(self):
