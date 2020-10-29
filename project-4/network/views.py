@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import datetime
 
 from .models import User, Post, Like, Following, Follower
@@ -81,9 +81,15 @@ def posts(request, postkind):
     posts = posts.order_by("-timestamp").all()
     #return JsonResponse([post.serialize() for post in posts], safe=False)
     posts1 = [post.serialize() for post in posts]
-    page = Paginator(posts1, 5)
-    current_page = page.page(1)
-    context = {"posts": list(current_page)}
+    paginator = Paginator(posts1, 10)
+    page = request.GET.get("page")
+    try:
+        posts1 = paginator.page(page)
+    except PageNotAnInteger:
+        posts1 = paginator.page(1)
+    except EmptyPage:
+        posts1 = paginator.page(paginator.num_pages)
+    context = {"num_pages":paginator.num_pages, "page": page, "posts": list(posts1)}
     return JsonResponse(context, safe=False)
     
 

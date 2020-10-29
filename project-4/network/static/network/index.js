@@ -21,16 +21,17 @@ document.addEventListener('DOMContentLoaded', function(){
     
     //Load all by default
     load_posts('all');
+    paginator('all')
 })
+
 
 function get_user(){
     fetch(`/user`)
     .then(response => response.json())
-    .then(result =>{return(result.user) })}
+    .then(result =>{return(result.user) })
+}
 
-
-
-function load_posts(postkind){
+function load_posts(postkind,page){
     //event.preventDefault();
     if(postkind === 'all'){
         document.querySelector('#compose-view').style.display = 'block'
@@ -39,7 +40,23 @@ function load_posts(postkind){
         document.querySelector('#posts-view').style.display = 'block'
     }
     document.querySelector('#posts-view').innerHTML = `<h3>${postkind.charAt(0).toUpperCase() + postkind.slice(1)}</h3>`;
-    get_posts(postkind)
+    get_posts(postkind,page)
+}
+
+function paginator(postkind){
+    fetch(`/posts/${postkind}`)
+    .then(response => response.json())
+    .then(result =>{
+        for(i=0;i<result.num_pages;i++){
+            const pag_button = document.createElement("button")
+            pag_button.innerHTML = `${i+1}`
+            pag_button.className = "page-button btn btn-primary"
+            const page_num = i+1
+            console.log(page_num)
+            pag_button.addEventListener('click', () => load_posts(postkind,page_num));
+            document.querySelector('#footer').appendChild(pag_button);
+        }
+    })
 }
 
 // Autosize the POST text area
@@ -73,8 +90,8 @@ function new_post(){
     }
 }
 
-function get_posts(postkind){
-    fetch(`/posts/${postkind}`)
+function get_posts(postkind, page){
+    fetch(`/posts/${postkind}?page=${page}`)
     .then(response => response.json())
     .then(result =>{
         result.posts.forEach(post => {
