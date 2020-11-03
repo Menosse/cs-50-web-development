@@ -68,12 +68,15 @@ def register(request):
         return render(request, "network/register.html")
 
 @login_required
-def posts(request, postkind):
+def posts(request, postkind, posts_per_page=10):
 
     if postkind == "all":
         posts = Post.objects.all()
     elif postkind == "following":
-        following = Following.objects.get(following=request.user)
+        try:
+            following = Following.objects.get(following=request.user)
+        except Following.DoesNotExist:
+            return JsonResponse({"message": "User not found"}, status=404)
         following_list = [user for user in following.following_list.all()]
         posts = Post.objects.filter(user__in=following_list)
     else:
@@ -81,7 +84,7 @@ def posts(request, postkind):
     posts = posts.order_by("-timestamp").all()
     #return JsonResponse([post.serialize() for post in posts], safe=False)
     posts1 = [post.serialize() for post in posts]
-    paginator = Paginator(posts1, 10)
+    paginator = Paginator(posts1, posts_per_page)
     page = request.GET.get("page")
     try:
         posts1 = paginator.page(page)
@@ -211,3 +214,27 @@ def single_post_content(request, post_id):
         except IntegrityError as e:
             print(e)
             return JsonResponse({"message": f"internal error {e}."}, status=500)
+
+@csrf_exempt
+@login_required
+def profile(request, user):
+    try:
+        user = User.objects.get(username=user)
+    except User.DoesNotExist:
+        return JsonResponse({"message": "User not found"}, status=404)
+    following = Following.objects.get(following=user).serialize()
+
+    follower = Follower.objects.get(follower=user).serialize()
+
+    posts = Post.objects.filter(user=user).order_by("-timestamp").all()
+    posts = [post.serialize() for post in posts]
+
+    return JsonResponse({
+    "following": following,
+    "following_number": len(following["following_list"]),
+    "followers": follower,
+    "followers_number": len(follower["followers_list"]),
+    "posts": posts,
+    })
+
+    
