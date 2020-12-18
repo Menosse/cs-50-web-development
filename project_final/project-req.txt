@@ -1,0 +1,11 @@
+requirements.txt
+
+pages
+Introduction
+	Should have a Photo and description
+Resume
+	Detailed information, Formal Resume and photos
+Projects
+	Each project should have a set of 1 or more photos and 1 description
+Contact
+	Email, phone, address, Socia Media, talk to me form
