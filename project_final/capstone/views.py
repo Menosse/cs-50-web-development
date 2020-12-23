@@ -14,11 +14,14 @@ def detail_view(request, id):
         'photos':photos
     })
 
+def list_projects(request):
+    projects = Project.objects.all()
+    projects = [p.serialize() for p in projects]
+    return JsonResponse({'projects':projects})
+
 def project_api(request, id):
-    project = Project.objects.get(id=id).serialize()
-    return JsonResponse({
-        'project':project
-    }, status=200)
+    project = Project.objects.get(id=id)
+    return JsonResponse(project.serialize())
 
 def project_images_api(request, id):
     project = Project.objects.get(id=id)
@@ -30,23 +33,43 @@ def project_images_api(request, id):
         'photos':photos
     })
 
+def intro_api(request,id=1):
+    intro = Intro.objects.get(id=id)
+    return JsonResponse(
+        intro.serialize()
+    )
+'''
 def intro_api(request):
     intro = Intro.objects.all()
     intro = [i.serialize() for i in intro]
     return JsonResponse({
         "intro":intro
     })
+'''
 
-def bio_api(request):
-    bio = Bio.objects.all()
-    bio = [b.serialize() for b in bio]
-    return JsonResponse({
-        'bio':bio
-    })
+def bio_api(request,id=1):
+    bio = Bio.objects.get(id=id)
+    return JsonResponse(
+        bio.serialize()
+    )
+#def bio_api(request):
+    #bio = Bio.objects.all()
+    #bio = [b.serialize() for b in bio]
+    #return JsonResponse({
+    #    'bio': bio
+    #})
+    
 
-def contact_api(request):
-    contact = Contact.objects.all()
+def contact_api(request, id=1):
+    contact = Contact.objects.get(id=id)
+    return JsonResponse(
+        contact.serialize()
+    )
+'''
+def contact_api(request, id=1):
+    contact = Contact.objects.get(id=id)
     contact = [c.serialize() for c in contact]
     return JsonResponse({
         'contact':contact
     })
+'''

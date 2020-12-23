@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.blog_view, name='blog'),
     path('project/<int:id>', views.project_api, name='project'),
+    path('list_projects', views.list_projects, name='list_projects'),
     path('intro', views.intro_api, name='intro'),
     path('bio', views.bio_api, name='bio'),
     path('contact', views.contact_api, name='contact'),
