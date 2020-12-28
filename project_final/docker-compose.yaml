@@ -1,10 +1,18 @@
-version: 3
+version: '3'
 services:
-  db:
-    image: postgres
-  web:
-    build: .
-    volumes:
-      -.:/usr/scr/app
+  back-app:
+    build: ./django-app
+    container_name: django-app
     ports:
-      - "8000:8000"
+      - 8000:8000
+    volumes:
+      - /Users/ts-fernando.b.takada/Documents/GitHub/cs-50-web-development/project_final/django-app:/usr/src/app
+  front-app:
+    build: ./front-app
+    container_name: react-app
+    ports:
+      - 3000:3000
+    links:
+      - back-app
+    volumes:
+      - /Users/ts-fernando.b.takada/Documents/GitHub/cs-50-web-development/project_final/front-app:/my-app/src

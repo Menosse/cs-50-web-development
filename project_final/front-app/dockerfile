@@ -1,0 +1,10 @@
+FROM node:current-alpine3.12
+RUN npx create-react-app my-app \
+    && cd my-app \
+    && npm i react-router-dom \
+    && npm i framer-motion \
+    && npm i styled-components
+WORKDIR my-app/src
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]

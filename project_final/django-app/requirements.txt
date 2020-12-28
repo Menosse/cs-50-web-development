@@ -1,0 +1,6 @@
+django
+pillow
+django-storages
+boto3
+djangorestframework
+django-cors-headers

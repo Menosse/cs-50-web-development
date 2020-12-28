@@ -25,14 +25,16 @@ SECRET_KEY = '_3#u)^lp0dm%1%-rdk5i=qgk#&)4t_rszenc1y(!w27sk)$54x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'capstone',
-    'storages',
+    'capstone', # my own project
+    'storages', # storages installed to use S3 bucket
+    'corsheaders', # corsheaders installed as app to expose the api endpoints
+    'rest_framework', # rest framework installed as app to make the api endpoints
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # corsheaders added to expose the api endpoinst
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,3 +143,9 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000',
+     'http://localhost:8000',
+     'http://localhost:8080'
+]
