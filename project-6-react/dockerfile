@@ -1,0 +1,14 @@
+FROM node:current-alpine3.12
+RUN npx create-react-app my-app \
+    && cd my-app \
+    && npm i react-router-dom \
+    && npm i framer-motion \
+    && npm i axios
+
+WORKDIR my-app/src
+RUN rm -f *
+COPY ./react-app/src .
+COPY ./react-app/public ../public
+RUN cd ..
+EXPOSE 3000
+CMD ["npm", "start"]

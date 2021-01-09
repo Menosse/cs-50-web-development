@@ -47,6 +47,7 @@ render() {
   if (isLoading) {
       return <p>Loading...</p>;
   }
+  else {
   return (
       <div className='list_project-container'>
         <div className='list_project-wrapper'>
@@ -58,6 +59,7 @@ render() {
         </div>
       </div>
   )
+  }
 }
 }
 
