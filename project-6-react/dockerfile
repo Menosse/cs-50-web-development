@@ -3,12 +3,14 @@ RUN npx create-react-app my-app \
     && cd my-app \
     && npm i react-router-dom \
     && npm i framer-motion \
-    && npm i axios
+    && npm i axios \
+    && npm i react-icons \
+    && npm i styled-components
 
 WORKDIR my-app/src
 RUN rm -f *
 COPY ./react-app/src .
-COPY ./react-app/public ../public
+#COPY ./react-app/public ../public
 RUN cd ..
 EXPOSE 3000
 CMD ["npm", "start"]

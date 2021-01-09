@@ -7,4 +7,4 @@ services:
       - 3000:3000
     volumes:
       - /Users/ts-fernando.b.takada/Documents/GitHub/cs-50-web-development/project-6-react/react-app/src:/my-app/src
-      - /Users/ts-fernando.b.takada/Documents/GitHub/cs-50-web-development/project-6-react/react-app/public:/my-app/public
+      #- /Users/ts-fernando.b.takada/Documents/GitHub/cs-50-web-development/project-6-react/react-app/public:/my-app/public
