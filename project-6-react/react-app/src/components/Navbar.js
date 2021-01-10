@@ -13,7 +13,6 @@ const Nav = styled.nav`
     z-index: 100;
     position: fixed;
     width: 100%;
-    background: red;
 `;
 
 const NavLink = css`
@@ -23,7 +22,7 @@ const NavLink = css`
     padding: 0 1rem;
     height: 100%;
     cursor: pointer;
-    text-decoraton: none;
+    text-decoration: none;
 `
 
 const Logo = styled(Link)`
@@ -71,11 +70,11 @@ const NavBtn = styled.div`
     }
 `
 
-const Navbar = () => {
+const Navbar = ({toggle}) => {
     return (
         <Nav>
             <Logo to='/'>ELIXR</Logo>
-            <MenuBars />
+            <MenuBars onClick={toggle}/>
             <NavMenu>
                 {menuData.map((item, index)=>(
                     <NavMenuLinks to={item.link} key={index}>
